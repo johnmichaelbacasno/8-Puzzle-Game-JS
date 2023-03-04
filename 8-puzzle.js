@@ -1,5 +1,20 @@
 const { Queue, PriorityQueue } = require('dsa.js');
 
+arrayShuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+};
+
+arrayIsEqual = (a, b) => 
+  Array.isArray(a) && 
+  Array.isArray(b) &&
+  a.length === b.length &&
+  a.every((val, index) => val === b[index]);
+
 translateTo2D = (index) => [Math.floor(index / 3), index % 3];
 
 manhattanDistance = (x1, y1, x2, y2) => Math.abs(x1 - x2) + Math.abs(y1 - y2);
@@ -65,23 +80,11 @@ inversions = (state) => {
 
 ifSolvable = (state) => inversions(state) % 2 === 0;
 
-shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-
-  return array;
-};
-
-arrayEquals = (a, b) => Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((val, index) => val === b[index]);
-
-
 createSolvableState = () => {
   var state = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   do {
-    state = shuffle(state);
+    state = arrayShuffle(state);
   } while (!ifSolvable(state));
 
   return state;
@@ -156,7 +159,7 @@ class BoardNode extends Node {
   
   actions = () => this.iterateAncestors().map((node) => node.action).slice(0, -1).reverse();
   
-  isGoal = () => arrayEquals(this.state, this.goal);
+  isGoal = () => arrayIsEqual(this.state, this.goal);
   
   print = () => this.state.toString();
 }
