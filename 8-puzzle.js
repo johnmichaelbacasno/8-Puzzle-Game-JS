@@ -164,40 +164,6 @@ class BoardNode extends Node {
   print = () => this.state.toString();
 }
 
-BFS = (start) => {
-  var frontier = new Queue();
-  var exploredNodes = new Set();
-  var nodesExpanded = 0;
-  var maxSearchDepth = 0;
-
-  frontier.enqueue(start);
-  
-  while (frontier.size > 0) {
-    node = frontier.dequeue();
-    exploredNodes.add(node.state.toString());
-    
-    if (node.isGoal()) {
-      return [node, node.actions(), nodesExpanded, maxSearchDepth];
-    }
-
-    node.expand();
-    nodesExpanded++;
-
-    for (let neighbor of node.nodes) {
-      if (!exploredNodes.has(neighbor.state.toString())) {
-        frontier.push(neighbor);
-        exploredNodes.add(neighbor.state.toString());
-
-        if (neighbor.depth > maxSearchDepth) {
-          maxSearchDepth = neighbor.depth;
-        }
-      }
-    }
-  }
-
-  return null;
-};
-
 ASTAR = (start) => {
   var comparator = (a, b) => a.cost() > b.cost();
   var frontier = new PriorityQueue([], comparator);
