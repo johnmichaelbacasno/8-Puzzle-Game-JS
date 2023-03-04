@@ -19,7 +19,7 @@ validActions = (state) => {
         validActions.push("D");
     }
     
-    if (blankIndex % 3 >= 0) {
+    if (blankIndex % 3 > 0) {
         validActions.push("L");
     }
     
@@ -170,9 +170,9 @@ class BoardNode extends Node {
             actions.push(node.action);
         }
         
-        actions.reverse();
         actions.pop();
-
+        actions.reverse();
+        
         return actions;
     }
 
@@ -201,7 +201,7 @@ BFS = start => {
         node = frontier.shift();
         exploredNodes.add(node.state.toString());
 
-        console.log(node.state)
+        //console.log(node.state)
 
         if (node.isGoal()) {
             return [node, nodesExpanded, maxSearchDepth];
@@ -220,7 +220,7 @@ BFS = start => {
                 }
             }
 
-            console.log(neighbor.state);
+            //console.log(neighbor.state);
         }
     }
 
@@ -244,5 +244,5 @@ console.log(shuffle([1, 2, 3]));
 //console.log(node.actions());
 //console.log([1, 2, 3].indexOf(2));
 
-console.log(solve([0, 1, 2, 3, 4, 5, 6, 7, 8]))
-//console.log(solve(createSolvableState()));
+console.log(solve([1, 2, 5, 3, 4, 0, 6, 7, 8]))
+console.log(solve(createSolvableState()));
