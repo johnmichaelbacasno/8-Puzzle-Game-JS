@@ -45,7 +45,7 @@ transform = (state, action) => {
       [newState[blankIndex], newState[blankIndex + 1]] = [newState[blankIndex + 1], newState[blankIndex]];
       break;
   }
-
+  
   return newState;
 };
 
@@ -74,11 +74,8 @@ shuffle = (array) => {
   return array;
 };
 
-swapElements = (array, index1, index2) => {
-  let temp = array[index1];
-  array[index1] = array[index2];
-  array[index2] = temp;
-};
+arrayEquals = (a, b) => Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((val, index) => val === b[index]);
+
 
 createSolvableState = () => {
   var state = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -156,29 +153,13 @@ class BoardNode extends Node {
       }
     }
   };
-
-  actions = () => {
-    var actions = [];
-
-    for (let node of this.iterateAncestors()) {
-      actions.push(node.action);
-    }
-
-    actions.pop();
-    actions.reverse();
-
-    return actions;
-  };
-
+  
+  actions = () => this.iterateAncestors().map((node) => node.action).slice(0, -1).reverse();
+  
   isGoal = () => arrayEquals(this.state, this.goal);
-
+  
   print = () => this.state.toString();
 }
-
-arrayEquals = (a, b) => Array.isArray(a) &&
-  Array.isArray(b) &&
-  a.length === b.length &&
-  a.every((val, index) => val === b[index]);
 
 BFS = (start) => {
   var frontier = new Queue();
