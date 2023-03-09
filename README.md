@@ -1,1 +1,1 @@
-# 8-Puzzle-JS
+# 8-Puzzle-Game-JS
